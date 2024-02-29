@@ -4,6 +4,13 @@
 $ pnpm install
 ```
 
+## DB setup
+```bash
+$ pnpm db:up
+$ pnpm db:generate
+$ pnpm db:seed
+```
+
 ## Running the app
 
 ```bash
