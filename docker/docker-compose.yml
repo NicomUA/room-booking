@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: db-booking
+      POSTGRES_USER: db-booking-user
+      POSTGRES_PASSWORD: db-booking-password
+    ports:
+      - '5432:5432'
+    # uncomment for permanent data storage
+    # volumes:
+    #   - ./postgresql/data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

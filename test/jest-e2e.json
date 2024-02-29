@@ -1,0 +1,21 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "@entitites/etitites/(.*)": "<rootDir>/../libs/etitites/src/$1",
+    "@entitites/etitites": "<rootDir>/../libs/etitites/src",
+    "@entities/entities/(.*)": "<rootDir>/../libs/entities/src/$1",
+    "@entities/entities": "<rootDir>/../libs/entities/src",
+    "@app/db/(.*)": "<rootDir>/../libs/db/src/$1",
+    "@app/db": "<rootDir>/../libs/db/src"
+  }
+}

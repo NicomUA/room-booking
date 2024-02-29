@@ -1,0 +1,11 @@
+node_modules
+app.zip
+npm-debug.log
+/dist
+# Cache used by TypeScript's incremental build
+*.tsbuildinf
+.env
+.bin/
+
+/docker
+/coverage
