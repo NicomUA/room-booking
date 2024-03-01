@@ -5,8 +5,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Booking } from '@prisma/client';
-import { RoomsService } from 'src/rooms/rooms.service';
-import { UserService } from 'src/user/user.service';
+import { RoomsService } from '../rooms/rooms.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class BookingsService {
@@ -18,29 +18,6 @@ export class BookingsService {
 
   getBookings() {
     return this.db.booking.findMany({
-      include: {
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
-      },
-    });
-  }
-
-  async getBookingsPerRoom(roomId: number) {
-    const room = await this.roomsService.findById(roomId);
-
-    if (!room) {
-      throw new NotFoundException('Room not found');
-    }
-
-    return this.db.booking.findMany({
-      where: {
-        roomId,
-      },
       include: {
         user: {
           select: {
@@ -78,7 +55,7 @@ export class BookingsService {
     //create booking
     return this.db.booking.create({
       data: {
-        userId: userId,
+        userId: user.id,
         roomId,
         startTime,
         endTime,

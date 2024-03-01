@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RoomsService delete when room not found 1`] = `"Room not found"`;
+
+exports[`RoomsService findById when room not found 1`] = `"Room not found"`;

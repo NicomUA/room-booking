@@ -11,6 +11,12 @@ export class UserService {
     });
   }
 
+  findByEmail(email: string) {
+    return this.db.user.findUnique({
+      where: { email },
+    });
+  }
+
   findById(id: number) {
     return this.db.user.findUnique({
       select: { id: true, name: true, email: true },

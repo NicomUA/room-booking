@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AuthService login should throw an error if password is wrong 1`] = `"Wrong password"`;
+
+exports[`AuthService login should throw an error if user not found 1`] = `"User not found"`;

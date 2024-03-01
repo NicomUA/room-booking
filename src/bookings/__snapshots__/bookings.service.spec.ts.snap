@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BookingsService createBooking should return null if room not found 1`] = `"Room not found"`;
+
+exports[`BookingsService createBooking should return null if user not found 1`] = `"User not found"`;
+
+exports[`BookingsService createBooking should throw if room not available 1`] = `"Room is not available"`;
+
+exports[`BookingsService deleteBooking should throw if booking not found 1`] = `"Booking not found"`;

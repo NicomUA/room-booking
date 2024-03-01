@@ -12,7 +12,7 @@ import { RoomsService } from './rooms.service';
 import { Room } from '@prisma/client';
 import { CreateRoomDto } from './dto/create-room.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 
 @ApiTags('rooms')
 @Controller('rooms')

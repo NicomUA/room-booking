@@ -11,11 +11,11 @@ import {
   Request,
 } from '@nestjs/common';
 import { BookingsService } from './bookings.service';
-import { ParseDatePipe } from 'src/utils/parseDatePipe';
+import { ParseDatePipe } from '../utils/parseDatePipe';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { Booking } from '@prisma/client';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 
 @ApiTags('booking')
 @Controller('bookings')
@@ -25,7 +25,7 @@ export class BookingsController {
   constructor(private readonly bookingsService: BookingsService) {}
 
   @Get()
-  async getBookings(): Promise<Booking[]> {
+  async findAll(): Promise<Booking[]> {
     return this.bookingsService.getBookings();
   }
 
@@ -43,9 +43,6 @@ export class BookingsController {
     @Request() req,
   ): Promise<Booking> {
     const { user } = req;
-    console.log({
-      user,
-    });
     return this.bookingsService.createBooking(
       roomId,
       startTime,
@@ -68,8 +65,6 @@ export class BookingsController {
     @Query('startTime', ParseDatePipe) startTime: Date,
     @Query('endTime', ParseDatePipe) endTime: Date,
   ) {
-    console.log({ roomId, startTime, endTime });
-
     return this.bookingsService.checkRoomAvailability(
       roomId,
       startTime,

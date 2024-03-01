@@ -1,4 +1,3 @@
-import { DbService } from '@app/db';
 import {
   BadRequestException,
   Injectable,
@@ -7,18 +6,17 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
 import { JwtPayloadResponse } from './dto/payload.dto';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private db: DbService,
     private jwtService: JwtService,
+    private userService: UserService,
   ) {}
 
   async login({ email, password }: LoginDto): Promise<JwtPayloadResponse> {
-    const user = await this.db.user.findUnique({
-      where: { email },
-    });
+    const user = await this.userService.findByEmail(email);
 
     if (!user) {
       throw new NotFoundException('User not found');

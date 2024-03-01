@@ -28,9 +28,7 @@ export class RoomsService {
   }
 
   async delete(id: number): Promise<void> {
-    const room = await this.db.room.findUnique({
-      where: { id },
-    });
+    const room = await this.findById(id);
 
     if (!room) {
       throw new NotFoundException('Room not found');
