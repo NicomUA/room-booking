@@ -8,18 +8,27 @@ datasource db {
 }
 
 model Room {
-  id       Int       @id @default(autoincrement())
-  name     String
-  capacity Int
-  Booking  Booking[]
+  id      Int       @id @default(autoincrement())
+  name    String
+  Booking Booking[]
 }
 
 model Booking {
   id        Int      @id @default(autoincrement())
-  room      Room     @relation(fields: [roomId], references: [id])
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   roomId    Int
+  userId    Int?
   startTime DateTime
   endTime   DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  email    String    @unique
+  name     String
+  password String
+  bookings Booking[]
 }
