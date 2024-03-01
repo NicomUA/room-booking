@@ -6,16 +6,18 @@ import {
 } from '@nestjs/common';
 import { Booking } from '@prisma/client';
 import { RoomsService } from 'src/rooms/rooms.service';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class BookingsService {
   constructor(
     private readonly db: DbService,
     private readonly roomsService: RoomsService,
+    private readonly userService: UserService,
   ) {}
 
   getBookings() {
-    return this.db.booking.findMany();
+    return this.db.booking.findMany({ include: { user: true } });
   }
 
   async getBookingsPerRoom(roomId: number) {
@@ -29,6 +31,9 @@ export class BookingsService {
       where: {
         roomId,
       },
+      include: {
+        user: true,
+      },
     });
   }
 
@@ -36,6 +41,7 @@ export class BookingsService {
     roomId: number,
     startTime: Date,
     endTime: Date,
+    userId: number,
   ): Promise<Booking> {
     // check if room is available in that time period
     const isAvailable = await this.checkRoomAvailability(
@@ -48,9 +54,15 @@ export class BookingsService {
       throw new BadRequestException('Room is not available');
     }
 
+    const user = await this.userService.findById(userId);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
     //create booking
     return this.db.booking.create({
       data: {
+        userId: userId,
         roomId,
         startTime,
         endTime,

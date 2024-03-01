@@ -6,14 +6,18 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
 import { Room } from '@prisma/client';
 import { CreateRoomDto } from './dto/create-room.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @ApiTags('rooms')
 @Controller('rooms')
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 export class RoomsController {
   constructor(private readonly roomsService: RoomsService) {}
 

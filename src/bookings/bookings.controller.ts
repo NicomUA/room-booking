@@ -7,15 +7,20 @@ import {
   ParseIntPipe,
   Post,
   Query,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { BookingsService } from './bookings.service';
 import { ParseDatePipe } from 'src/utils/parseDatePipe';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { Booking } from '@prisma/client';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @ApiTags('booking')
 @Controller('bookings')
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 export class BookingsController {
   constructor(private readonly bookingsService: BookingsService) {}
 
@@ -35,8 +40,18 @@ export class BookingsController {
   @Post()
   async createBooking(
     @Body() { roomId, startTime, endTime }: CreateBookingDto,
+    @Request() req,
   ): Promise<Booking> {
-    return this.bookingsService.createBooking(roomId, startTime, endTime);
+    const { user } = req;
+    console.log({
+      user,
+    });
+    return this.bookingsService.createBooking(
+      roomId,
+      startTime,
+      endTime,
+      user.id,
+    );
   }
 
   /**

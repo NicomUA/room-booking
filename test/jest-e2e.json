@@ -16,6 +16,10 @@
     "@entities/entities/(.*)": "<rootDir>/../libs/entities/src/$1",
     "@entities/entities": "<rootDir>/../libs/entities/src",
     "@app/db/(.*)": "<rootDir>/../libs/db/src/$1",
-    "@app/db": "<rootDir>/../libs/db/src"
+    "@app/db": "<rootDir>/../libs/db/src",
+    "@app/config/(.*)": "<rootDir>/../libs/config/src/$1",
+    "@app/config": "<rootDir>/../libs/config/src",
+    "@app/configuration/(.*)": "<rootDir>/../libs/configuration/src/$1",
+    "@app/configuration": "<rootDir>/../libs/configuration/src"
   }
 }
