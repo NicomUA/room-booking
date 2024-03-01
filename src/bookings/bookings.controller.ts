@@ -1,5 +1,7 @@
 import {
+  Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -7,30 +9,67 @@ import {
   Query,
 } from '@nestjs/common';
 import { BookingsService } from './bookings.service';
+import { ParseDatePipe } from 'src/utils/parseDatePipe';
+import { CreateBookingDto } from './dto/create-booking.dto';
+import { Booking } from '@prisma/client';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('booking')
 @Controller('bookings')
 export class BookingsController {
   constructor(private readonly bookingsService: BookingsService) {}
 
-  @Post(':roomId')
+  @Get()
+  async getBookings(): Promise<Booking[]> {
+    return this.bookingsService.getBookings();
+  }
+
+  /**
+   * Creates a booking with the specified room, start time, and end time.
+   *
+   * @param {CreateBookingDto} roomId - the ID of the room for the booking
+   * @param {CreateBookingDto} startTime - the start time of the booking
+   * @param {CreateBookingDto} endTime - the end time of the booking
+   * @return {Promise<Booking>} the newly created booking
+   */
+  @Post()
   async createBooking(
-    @Param('roomId', ParseIntPipe) roomId: number,
-    @Query('startTime') startTime: Date,
-    @Query('endTime') endTime: Date,
-  ) {
+    @Body() { roomId, startTime, endTime }: CreateBookingDto,
+  ): Promise<Booking> {
     return this.bookingsService.createBooking(roomId, startTime, endTime);
   }
 
+  /**
+   * Asynchronous function to check the availability of a room.
+   *
+   * @param {number} roomId - the ID of the room to check availability for
+   * @param {Date} startTime - the start time for checking availability
+   * @param {Date} endTime - the end time for checking availability
+   * @return {Promise<boolean>} a promise that resolves to a boolean indicating the availability status
+   */
   @Get('/available')
   async checkRoomAvailability(
     @Query('roomId', ParseIntPipe) roomId: number,
-    @Query('startTime') startTime: Date,
-    @Query('endTime') endTime: Date,
+    @Query('startTime', ParseDatePipe) startTime: Date,
+    @Query('endTime', ParseDatePipe) endTime: Date,
   ) {
+    console.log({ roomId, startTime, endTime });
+
     return this.bookingsService.checkRoomAvailability(
       roomId,
       startTime,
       endTime,
     );
+  }
+
+  /**
+   * Delete a booking by ID.
+   *
+   * @param {number} id - The ID of the booking to be deleted
+   * @return {Promise<void>} A promise that resolves when the booking is deleted
+   */
+  @Delete(':id')
+  async deleteBooking(@Param('id', ParseIntPipe) id: number) {
+    return this.bookingsService.deleteBooking(id);
   }
 }

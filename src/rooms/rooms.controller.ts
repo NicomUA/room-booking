@@ -6,13 +6,13 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Put,
 } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
 import { Room } from '@prisma/client';
 import { CreateRoomDto } from './dto/create-room.dto';
-import { UpdateRoomDto } from './dto/update-room.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('rooms')
 @Controller('rooms')
 export class RoomsController {
   constructor(private readonly roomsService: RoomsService) {}
@@ -30,14 +30,6 @@ export class RoomsController {
   @Post()
   async create(@Body() data: CreateRoomDto): Promise<Room> {
     return this.roomsService.create(data);
-  }
-
-  @Put(':id')
-  async update(
-    @Param('id, ParseIntPipe') id: number,
-    @Body() data: UpdateRoomDto,
-  ): Promise<Room> {
-    return this.roomsService.update(id, data);
   }
 
   @Delete(':id')
