@@ -17,7 +17,17 @@ export class BookingsService {
   ) {}
 
   getBookings() {
-    return this.db.booking.findMany({ include: { user: true } });
+    return this.db.booking.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
   }
 
   async getBookingsPerRoom(roomId: number) {
@@ -32,7 +42,13 @@ export class BookingsService {
         roomId,
       },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
       },
     });
   }
