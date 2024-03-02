@@ -39,7 +39,7 @@ $ pnpm run test:cov
 
 ## API doc
 ```
-http://lcoalhost:3000/doc
+http://localhost:3000/doc
 ```
 
 
