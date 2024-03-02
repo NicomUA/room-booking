@@ -9,7 +9,7 @@ const redis = new Redis({
 
 export const cacheMiddleware: Prisma.Middleware = createPrismaRedisCache({
   models: [
-    { model: 'Booking', excludeMethods: ['findMany'] },
+    { model: 'Booking', excludeMethods: ['findFirst'] },
     { model: 'User', excludeMethods: ['findMany'] },
     { model: 'Room', excludeMethods: ['findMany'] },
   ],
@@ -20,6 +20,5 @@ export const cacheMiddleware: Prisma.Middleware = createPrismaRedisCache({
       invalidation: { referencesTTL: 300 },
     },
   },
-  excludeModels: ['Booking'],
   cacheTime: 300,
 });
