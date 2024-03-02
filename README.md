@@ -4,6 +4,10 @@
 $ cp .env.example .env
 $ pnpm install
 ```
+## Docker
+```bash
+$ docker compose up -d
+```
 
 ## DB setup
 ```bash
@@ -42,6 +46,7 @@ $ pnpm run test:cov
 ```
 http://localhost:3000/doc
 ```
+Postman collection can be found in `./postman` folder
 
 
 ## To Improve: 
