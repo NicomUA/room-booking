@@ -45,8 +45,8 @@ export class BookingsController {
     const { user } = req;
     return this.bookingsService.createBooking(
       roomId,
-      startTime,
-      endTime,
+      new Date(startTime),
+      new Date(endTime),
       user.id,
     );
   }
