@@ -32,4 +32,9 @@ describe('UserService', () => {
     const user = await service.findById(1);
     expect(user).toEqual(userMock);
   });
+
+  it('findByEmail', async () => {
+    const user = await service.findByEmail('test');
+    expect(user).toEqual(userMock);
+  });
 });

@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+import { JWTPayload } from './dto/payload.dto';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -21,10 +22,10 @@ export class AuthGuard implements CanActivate {
     const JWT_SECRET = this.config.get('JWT_SECRET');
 
     if (!token) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Token is missing');
     }
     try {
-      const payload = await this.jwtService.verifyAsync(token, {
+      const payload = await this.jwtService.verifyAsync<JWTPayload>(token, {
         secret: JWT_SECRET,
       });
       request['user'] = { id: payload.sub, ...payload };

@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AuthGuard canActivate fail when token is invalid 1`] = `"Unauthorized"`;
+
+exports[`AuthGuard canActivate fail when token not provided 1`] = `"Token is missing"`;
