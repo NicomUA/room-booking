@@ -29,6 +29,12 @@
       ],
       "@app/configuration/*": [
         "libs/configuration/src/*"
+      ],
+      "@app/mailer": [
+        "libs/mailer/src"
+      ],
+      "@app/mailer/*": [
+        "libs/mailer/src/*"
       ]
     }
   }

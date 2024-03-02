@@ -86,7 +86,8 @@
     "moduleNameMapper": {
       "^@app/db(|/.*)$": "<rootDir>/libs/db/src/$1",
       "^@app/config(|/.*)$": "<rootDir>/libs/config/src/$1",
-      "^@app/configuration(|/.*)$": "<rootDir>/libs/configuration/src/$1"
+      "^@app/configuration(|/.*)$": "<rootDir>/libs/configuration/src/$1",
+      "^@app/mailer(|/.*)$": "<rootDir>/libs/mailer/src/$1"
     }
   }
 }

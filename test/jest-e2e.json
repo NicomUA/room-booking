@@ -20,6 +20,8 @@
     "@app/config/(.*)": "<rootDir>/../libs/config/src/$1",
     "@app/config": "<rootDir>/../libs/config/src",
     "@app/configuration/(.*)": "<rootDir>/../libs/configuration/src/$1",
-    "@app/configuration": "<rootDir>/../libs/configuration/src"
+    "@app/configuration": "<rootDir>/../libs/configuration/src",
+    "@app/mailer/(.*)": "<rootDir>/../libs/mailer/src/$1",
+    "@app/mailer": "<rootDir>/../libs/mailer/src"
   }
 }

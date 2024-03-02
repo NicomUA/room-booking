@@ -7,6 +7,7 @@ import {
 import { Booking } from '@prisma/client';
 import { RoomsService } from '../rooms/rooms.service';
 import { UserService } from '../user/user.service';
+import { MailerService } from '@app/mailer';
 
 @Injectable()
 export class BookingsService {
@@ -14,6 +15,7 @@ export class BookingsService {
     private readonly db: DbService,
     private readonly roomsService: RoomsService,
     private readonly userService: UserService,
+    private readonly mailerService: MailerService,
   ) {}
 
   getBookings() {
@@ -53,7 +55,7 @@ export class BookingsService {
     }
 
     //create booking
-    return this.db.booking.create({
+    const booking = await this.db.booking.create({
       data: {
         userId: user.id,
         roomId,
@@ -61,6 +63,11 @@ export class BookingsService {
         endTime,
       },
     });
+
+    // send booking confirmation email
+    this.mailerService.sendBookingConfirmation(user, booking);
+
+    return booking;
   }
 
   async checkRoomAvailability(
