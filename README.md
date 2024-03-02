@@ -1,6 +1,7 @@
 ## Installation
 
 ```bash
+$ cp .env.example .env
 $ pnpm install
 ```
 
