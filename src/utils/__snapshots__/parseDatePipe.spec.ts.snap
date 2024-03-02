@@ -1,5 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`parseDatePipe unit test should throw an error if date format is wrong 1`] = `"Invalid date format. Expected YYYY-MM-DD HH:MM"`;
+exports[`parseDatePipe unit test should throw an error if date format is wrong 1`] = `"Invalid date format. Expected YYYY-MM-DDTHH:MM:SS.MMMZ"`;
 
 exports[`parseDatePipe unit test should throw an error if value not provided 1`] = `"Date should be provided"`;

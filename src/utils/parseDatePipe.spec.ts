@@ -8,8 +8,8 @@ describe('parseDatePipe unit test', () => {
   });
 
   it('should return date', () => {
-    expect(pipe.transform('2020-01-01 12:30:00')).toEqual(
-      new Date('2020-01-01 12:30:00'),
+    expect(pipe.transform('2020-01-01T12:30:00.000Z')).toEqual(
+      new Date('2020-01-01T12:30:00.000Z'),
     );
   });
 

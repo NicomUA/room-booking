@@ -6,10 +6,10 @@ export class ParseDatePipe implements PipeTransform {
     if (!value) {
       throw new BadRequestException('Date should be provided');
     }
-
-    if (!/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/.test(value)) {
+    // ISO Date regular expression check
+    if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/.test(value)) {
       throw new BadRequestException(
-        'Invalid date format. Expected YYYY-MM-DD HH:MM',
+        'Invalid date format. Expected YYYY-MM-DDTHH:MM:SS.MMMZ',
       );
     }
 
