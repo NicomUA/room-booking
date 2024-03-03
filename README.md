@@ -53,6 +53,7 @@ Postman collection can be found in `./postman` folder
 1. Use Queue for email processing
 2. add validation to avoid booking lest then 30 minutes
 3. Add DB constrain to avoid overlap (move this logic to DB)
+4. Prisma caching middleware have some strange bug with configuration. Better to use in-house solution or caching queries  
 
 ## Service Architecture:
              +------------------+
