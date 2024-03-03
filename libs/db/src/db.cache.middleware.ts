@@ -8,11 +8,7 @@ const redis = new Redis({
 });
 
 export const cacheMiddleware: Prisma.Middleware = createPrismaRedisCache({
-  models: [
-    { model: 'Booking', excludeMethods: ['findFirst'] },
-    { model: 'User', excludeMethods: ['findMany'] },
-    { model: 'Room', excludeMethods: ['findMany'] },
-  ],
+  excludeMethods: ['findFirst', 'count'],
   storage: {
     type: 'redis',
     options: {
