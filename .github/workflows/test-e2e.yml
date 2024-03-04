@@ -1,0 +1,42 @@
+name: Room Booking E2E Tests
+
+on:
+  pull_request:
+    branches: ["dev"]
+  push:
+    branches: ["main"]
+
+jobs:
+  test_e2e:
+    runs-on: ubuntu-latest
+    name: Test E2E
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "pnpm"
+
+      - name: Copy ENV
+        run: cp .env.test .env
+
+      - name: Start DB
+        run: docker compose --env-file=.env up -d
+
+      - name: Install pkg
+        run: |
+          pnpm install --frozen-lockfile  --prefer-offline  --silent
+          pnpm db:generate
+
+      - name: DB migrations
+        run: |
+          pnpm db:up
+          pnpm db:seed
+
+      - name: Run API E2E tests
+        run: |
+          pnpm test:e2e
