@@ -1,0 +1,30 @@
+name: Room Booking Unit Tests
+
+on:
+  pull_request:
+    branches: ["dev"]
+  push:
+    branches: ["main"]
+
+jobs:
+  test_e2e:
+    runs-on: ubuntu-latest
+    name: Unit Test
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "pnpm"
+
+      - name: Install pkg
+        run: |
+          pnpm install --frozen-lockfile  --prefer-offline  --silent
+
+      - name: Run Unit tests
+        run: |
+          pnpm test:e2e
