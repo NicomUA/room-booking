@@ -8,7 +8,7 @@ describe('Booking flow (e2e)', () => {
   let token;
   let bookingId;
 
-  const bookingMockDAta = {
+  const bookingMockData = {
     roomId: 1,
     startTime: '2022-01-01T00:00:00.000Z',
     endTime: '2022-01-01T01:00:00.000Z',
@@ -34,7 +34,7 @@ describe('Booking flow (e2e)', () => {
     const { status, body } = await request(app.getHttpServer())
       .post('/bookings')
       .set('Authorization', `Bearer ${token}`)
-      .send(bookingMockDAta);
+      .send(bookingMockData);
 
     expect(status).toBe(201);
     expect(body).toEqual({
@@ -50,11 +50,23 @@ describe('Booking flow (e2e)', () => {
     bookingId = body.id;
   });
 
+  it('room should be available at booked time', () => {
+    return request(app.getHttpServer())
+      .get(
+        '/bookings/available?roomId=1&startTime=2022-01-01T00:00:00.000Z&endTime=2022-01-01T01:00:00.000Z',
+      )
+      .set('Authorization', `Bearer ${token}`)
+      .expect((res) => {
+        expect(res.status).toBe(200);
+        expect(res.text).toEqual('false');
+      });
+  });
+
   it('should return 400 if try to book room at same time', () => {
     return request(app.getHttpServer())
       .post('/bookings')
       .set('Authorization', `Bearer ${token}`)
-      .send(bookingMockDAta)
+      .send(bookingMockData)
       .expect(400);
   });
 
@@ -73,5 +85,17 @@ describe('Booking flow (e2e)', () => {
       .set('Authorization', `Bearer ${token}`);
 
     expect(status).toBe(200);
+  });
+
+  it('room should be available after booking deleting', () => {
+    return request(app.getHttpServer())
+      .get(
+        '/bookings/available?roomId=1&startTime=2022-01-01T00:00:00.000Z&endTime=2022-01-01T01:00:00.000Z',
+      )
+      .set('Authorization', `Bearer ${token}`)
+      .expect((res) => {
+        expect(res.status).toBe(200);
+        expect(res.text).toEqual('true');
+      });
   });
 });
